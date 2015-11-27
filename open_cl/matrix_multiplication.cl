@@ -10,7 +10,7 @@ __kernel void matrix_multiplication(__global const float *A, __global const floa
 	// this is not great test .
 	for(int k = 0; k < COLS_A; k++)
 	{
-		tmp += A[j*COLS_A + k] * B[k*ROWS_B + i];
+		tmp += A[i*COLS_A + k] * B[k*COLS_B + j];
 	}
-	C[j*COLS_A + i] = tmp;
+	C[i*COLS_B + j] = tmp;
 }

@@ -17,21 +17,23 @@ void gradient_descent(OpenCLConfig* config, float* X, float* y, float* theta, fl
     cl_mem gradient_buf = clCreateBuffer(config->context, CL_MEM_READ_WRITE, n * sizeof(float), NULL, &ret);
 	
 	matrix_transpose(config, m, n, X_buf, XT_buf);
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < itrs; i++)
 	{
 		cout << "iteration# " << i << endl;
 		matrix_multiplication(config, m, n, n, 1, X_buf, theta_buf, h_buf);
 		matrix_subtraction(config, m, 1, h_buf, y_buf, errors_buf);
+		// good up until here... perhaps the transpose is done incorrectly.
 		matrix_multiplication(config, n, m, m, 1, XT_buf, errors_buf, tmp_buf);
 		scalar_multiplication(config, alpha/m, n, 1, tmp_buf, gradient_buf);
 		matrix_subtraction(config, n, 1, theta_buf, gradient_buf, theta_buf);
 	}
-
-	 clEnqueueReadBuffer(config->command_queue, theta_buf, CL_TRUE, 0, n*1 * sizeof(float), theta, 0, NULL, NULL);
-	 for(int i = 0; i < n; i++)
-	 {
-		 cout << theta[i] << ", ";
-	 }
+	
+	
+	clEnqueueReadBuffer(config->command_queue, theta_buf, CL_TRUE, 0, n * sizeof(float), theta, 0, NULL, NULL);
+	for(int i = 0; i < n; i++)
+	{
+		cout << theta[i] << " ";
+	}
 }
 
 int main(void) 
@@ -40,14 +42,12 @@ int main(void)
 	// wud also be good to start doing the error checks everyone else seems to do.
 	OpenCLConfig* config = getOpenCLConfig();
 
-	int m = 47;
+	int m = 97;
 	int n = 2;
 	float alpha = .01;
 	float* X = loadMatrix(m, n, fopen("X.csv", "r"));
-	float* y = loadMatrix(m, 1, fopen("Y.csv", "r"));
-	float* theta = (float*)malloc(sizeof(float) * n);
-	theta[0] = 0;
-	theta[1] = 0;
+	float* y = loadMatrix(m, 1, fopen("y.csv", "r"));
+	float theta[] = {0.0, 0.0};
 
 	gradient_descent(config, X, y, theta, alpha, m, n, 100);
 

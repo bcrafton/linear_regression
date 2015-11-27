@@ -5,9 +5,6 @@ void matrix_multiplication(OpenCLConfig* config, int ROWS_A, int COLS_A, int ROW
 {
 	cl_int ret;
 	program_src* src = load_program_string("source\\open_cl\\matrix_multiplication.cl");
-	int matrix_a_size = ROWS_A * COLS_A;
-	int matrix_b_size = COLS_A * COLS_B;
-	int matrix_c_size = ROWS_A * COLS_B;
 
 	cl_program program = clCreateProgramWithSource(config->context, 1, (const char **)&(src->src), (const size_t *)&(src->size), &ret);
 

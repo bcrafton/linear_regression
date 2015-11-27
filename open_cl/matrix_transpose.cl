@@ -4,5 +4,5 @@ __kernel void matrix_transpose(__global const float *A, __global float *C, int R
     int i = get_global_id(0);
 	int j = get_global_id(1);
     // Do the operation
-	C[j*COLS + i] = A[i*ROWS + j];
+	C[j*ROWS + i] = A[i*COLS + j];
 }
