@@ -5,9 +5,9 @@ OpenCLConfig* getOpenCLConfig()
 	OpenCLConfig* config = (OpenCLConfig*)malloc(sizeof(OpenCLConfig));
 
 	cl_platform_id* platforms = NULL;
-    cl_uint num_platforms;
+	cl_uint num_platforms;
 	cl_device_id* devices = NULL;   
-    cl_uint num_devices;
+	cl_uint num_devices;
 
 	clGetPlatformIDs(0, NULL, &num_platforms);
 	platforms = (cl_platform_id*)malloc(sizeof(cl_platform_id) * num_platforms);
@@ -46,23 +46,23 @@ float* loadMatrix(const int height, const int width, FILE *fp)
 program_src* load_program_string(char* source_file)
 {
 	FILE *fp;
-    char *source_str;
-    size_t source_size;
- 
-    fp = fopen(source_file, "r");
-    if (!fp) {
-        fprintf(stderr, "Failed to load kernel.\n");
-        exit(1);
-    }
+	char *source_str;
+	size_t source_size;
 
-    source_str = (char*)malloc(MAX_SOURCE_SIZE);
-    source_size = fread( source_str, 1, MAX_SOURCE_SIZE, fp);
+	fp = fopen(source_file, "r");
+	if (!fp) {
+		fprintf(stderr, "Failed to load kernel.\n");
+		exit(1);
+	}
+
+	source_str = (char*)malloc(MAX_SOURCE_SIZE);
+	source_size = fread( source_str, 1, MAX_SOURCE_SIZE, fp);
 
 	program_src* ret = (program_src*)malloc(sizeof(program_src));
 	ret->size = source_size;
 	ret->src = source_str;
 
-    fclose( fp );
+	fclose( fp );
 
 	return ret;
 }

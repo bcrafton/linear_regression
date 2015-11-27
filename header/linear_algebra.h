@@ -3,7 +3,7 @@
 #include "OpenCLCustom.h"
 
 void matrix_multiplication(OpenCLConfig* config, int ROWS_A, int COLS_A, int ROWS_B, int COLS_B, cl_mem &a_mem_obj,
-					 cl_mem& b_mem_obj, cl_mem& c_mem_obj);
+						   cl_mem& b_mem_obj, cl_mem& c_mem_obj);
 
 void matrix_subtraction(OpenCLConfig* config, int ROWS, int COLS, cl_mem &a_mem_obj, cl_mem& b_mem_obj, cl_mem& c_mem_obj);
 
