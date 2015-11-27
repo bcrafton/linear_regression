@@ -22,7 +22,6 @@ void gradient_descent(OpenCLConfig* config, float* X, float* y, float* theta, fl
 		cout << "iteration# " << i << endl;
 		matrix_multiplication(config, m, n, n, 1, X_buf, theta_buf, h_buf);
 		matrix_subtraction(config, m, 1, h_buf, y_buf, errors_buf);
-		// good up until here... perhaps the transpose is done incorrectly.
 		matrix_multiplication(config, n, m, m, 1, XT_buf, errors_buf, tmp_buf);
 		scalar_multiplication(config, alpha/m, n, 1, tmp_buf, gradient_buf);
 		matrix_subtraction(config, n, 1, theta_buf, gradient_buf, theta_buf);
